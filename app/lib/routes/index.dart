@@ -5,7 +5,7 @@ import '../features/create/page.dart';
 import '../features/home/page.dart';
 
 GoRouter router(BuildContext context) => GoRouter(
-      initialLocation: Routes.create,
+      initialLocation: Routes.home,
       routes: [
         GoRoute(
           path: Routes.home,
