@@ -7,6 +7,7 @@ import '../data/repositories/index.dart';
 import '../data/sources/index.dart';
 import '../domain/repositories/index.dart';
 import '../domain/sources/index.dart';
+import '../features/home/bloc/cubit.dart';
 
 final getIt = GetIt.I;
 
@@ -31,21 +32,6 @@ void registerSources() {
 }
 
 void registerBlocs() {
-  // getIt.registerFactory<HomeCubit>(() => HomeCubit());
-
-  // getIt.registerFactory<MainCubit>(
-  //     () => MainCubit(serviceRepository: getIt.get<ServiceRepository>()));
-
-  // getIt.registerFactory<LoginCubit>(() => LoginCubit(
-  //       userRepository: getIt.get<UserRepository>(),
-  //     ));
-
-  // getIt.registerFactory<FindProviderCubit>(() => FindProviderCubit(
-  //       orderRepository: getIt.get<OrderRepository>(),
-  //       serviceRepository: getIt.get<ServiceRepository>(),
-  //       streamControllers: getIt.get<StreamControllers>(),
-  //       sockets: getIt.get<Sockets>(),
-  //     ));
-
-  // getIt.registerFactory<FeedbackCubit>(() => FeedbackCubit());
+  getIt.registerFactory<HomeCubit>(
+      () => HomeCubit(expenseRepository: getIt.get<ExpenseRepository>()));
 }
