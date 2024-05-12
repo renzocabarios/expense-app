@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/create/page.dart';
 import '../features/home/page.dart';
 
 GoRouter router(BuildContext context) => GoRouter(
-      initialLocation: Routes.home,
+      initialLocation: Routes.create,
       routes: [
         GoRoute(
           path: Routes.home,
@@ -15,7 +16,7 @@ GoRouter router(BuildContext context) => GoRouter(
         GoRoute(
           path: Routes.create,
           builder: (context, state) {
-            return const HomePage();
+            return const CreatePage();
           },
         ),
       ],
