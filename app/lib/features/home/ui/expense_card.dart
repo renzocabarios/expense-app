@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:wealth_weaver/data/models/index.dart';
 
 import '../../../constants/design.dart';
 
 class ExpenseCard extends StatelessWidget {
-  const ExpenseCard({super.key});
+  final ExpenseModel expense;
+  const ExpenseCard({super.key, required this.expense});
 
   @override
   Widget build(BuildContext context) {
@@ -23,23 +25,24 @@ class ExpenseCard extends StatelessWidget {
           ),
         ],
       ),
-      child: const Wrap(
+      child: Wrap(
         spacing: 10,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                "Shopping",
-                style: TextStyle(
-                  fontSize: 12,
+                "${expense.name}",
+                style: const TextStyle(
+                  fontSize: 14,
                   fontWeight: FontWeight.w500,
                   color: Design.white50,
                 ),
               ),
               Text(
-                "- ₱5120",
-                style: TextStyle(
+                "- ${expense.amount}",
+                style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: Design.red600,
@@ -47,26 +50,18 @@ class ExpenseCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                "Buy some grocery",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: Design.white300,
-                ),
-              ),
-              Text(
-                "10:00 AM",
-                style: TextStyle(
-                  fontSize: 12,
+                "${expense.createdAt}",
+                style: const TextStyle(
+                  fontSize: 8,
                   fontWeight: FontWeight.w500,
-                  color: Design.white50,
+                  color: Design.white700,
                 ),
               ),
             ],
