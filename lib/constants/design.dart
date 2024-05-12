@@ -6,6 +6,7 @@ class Design {
 
   static const white50 = Color(0xFFFDFDFD);
   static const white300 = Color(0xFFF0F0F1);
+  static const white700 = Color(0xFFA5A5A6);
 
   static const red600 = Color(0xFFD31701);
 
