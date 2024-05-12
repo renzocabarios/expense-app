@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'di/index.dart';
 import 'routes/index.dart';
 
 void main() {
+  resolveDependencies();
   runApp(const MyApp());
 }
 
