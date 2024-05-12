@@ -1,38 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../constants/design.dart';
+import '../bloc/cubit.dart';
 
 class TotalBalance extends StatelessWidget {
   const TotalBalance({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Row(
+    return BlocBuilder<HomeCubit, HomeState>(
+      builder: (context, state) {
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Total Expense",
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
             Text(
-              "Total Expense",
-              style: TextStyle(
-                fontSize: 14,
+              "₱ ${state.total}",
+              style: const TextStyle(
+                fontSize: 22,
+                color: Design.white50,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
               ),
             ),
           ],
-        ),
-        Text(
-          "₱ 2,548.00",
-          style: TextStyle(
-            fontSize: 22,
-            color: Design.white50,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }
