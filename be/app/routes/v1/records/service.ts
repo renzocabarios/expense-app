@@ -1,6 +1,5 @@
 import { IQuery } from "../../../types";
 import model from "./model";
-import { ClientSession } from "mongoose";
 
 async function getMaxCount({ filter }: IQuery) {
   const { __t, ...res } = filter;
@@ -23,31 +22,27 @@ async function getAll({
     .skip(limit == 0 ? 0 : (page - 1) * limit);
 }
 
+async function getOne(filter: any) {
+  return await model.findOne({ ...filter, deleted: false });
+}
+
 async function getById(_id: string) {
   return await model.findOne({ _id, deleted: false });
 }
 
-async function add(_body: Partial<any>, session: ClientSession) {
-  return await model.create([_body], { session });
+async function add(_body: Partial<any>, options: any) {
+  return await model.create([_body], { options });
 }
 
-async function addMany(_body: any[], session: ClientSession) {
-  return await model.insertMany(_body, { session });
+async function update(filter: any, _body: Partial<any>, options: any) {
+  return await model.findOneAndUpdate(filter, _body, { ...options });
 }
 
-async function update(
-  filter: any,
-  _body: Partial<any>,
-  session: ClientSession
-) {
-  return await model.findOneAndUpdate(filter, _body, { new: true, session });
-}
-
-async function removeOne(filter: any, session: ClientSession) {
+async function removeOne(filter: any, options: any) {
   return await model.findOneAndUpdate(
     filter,
     { deleted: true },
-    { new: true, session }
+    { ...options }
   );
 }
 
@@ -58,5 +53,5 @@ export default {
   add,
   update,
   removeOne,
-  addMany,
+  getOne,
 };

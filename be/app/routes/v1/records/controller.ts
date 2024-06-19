@@ -26,7 +26,7 @@ const getAll = async (_req: Request, _res: Response) => {
   _res.send({
     data,
     status: "success",
-    message: "Get action success",
+    message: "Get record success",
     meta: {
       access: generateAccess({}),
       page,
@@ -42,7 +42,7 @@ const getById = async (_req: Request, _res: Response) => {
   _res.send({
     data,
     status: "success",
-    message: "Get action success",
+    message: "Get record success",
     meta: {
       access: generateAccess({}),
     },
@@ -55,9 +55,9 @@ const add = async (_req: Request, _res: Response) => {
     await transaction(
       session,
       async () => {
-        return await service.add({ ..._req.body }, session);
+        return await service.add({ ..._req.body }, { session });
       },
-      "Create action"
+      "Create record"
     )
   );
 };
@@ -69,27 +69,13 @@ const update = async (_req: Request, _res: Response) => {
     await transaction(
       session,
       async () => {
-        return await service.update({ _id: id }, { ..._req.body }, session);
-      },
-      "Update action"
-    )
-  );
-};
-
-const increment = async (_req: Request, _res: Response) => {
-  const session: ClientSession = await startSession();
-  const { id } = _req.params;
-  _res.send(
-    await transaction(
-      session,
-      async () => {
         return await service.update(
           { _id: id },
-          { $inc: { score: 1 } },
-          session
+          { ..._req.body },
+          { session, new: true }
         );
       },
-      "Update action score"
+      "Update record"
     )
   );
 };
@@ -102,11 +88,11 @@ const removeOne = async (_req: Request, _res: Response) => {
     await transaction(
       session,
       async () => {
-        return await service.removeOne({ _id: id }, session);
+        return await service.removeOne({ _id: id }, { session, new: true });
       },
-      "Delete action"
+      "Delete record"
     )
   );
 };
 
-export { getAll, getById, add, update, removeOne, increment };
+export { getAll, getById, add, update, removeOne };
