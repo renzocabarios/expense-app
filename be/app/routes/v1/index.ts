@@ -1,7 +1,12 @@
 import recordsRoute from "./records/route";
+import usersRoute from "./users/route";
 import { IRoutes, IRoute } from "../../types";
 
 const routes: IRoutes = [
+  {
+    url: "users",
+    route: usersRoute,
+  },
   {
     url: "records",
     route: recordsRoute,
