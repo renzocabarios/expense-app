@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import ENV from "../env/index.js";
+import ENV from "../env/index";
 import { Request, Response, NextFunction } from "express";
 
 export default async (_req: Request, _res: Response, _next: NextFunction) => {

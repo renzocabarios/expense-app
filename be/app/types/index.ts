@@ -5,11 +5,6 @@ export interface IModel {
   deleted?: Boolean;
 }
 
-export interface IExpenseModel extends IModel {
-  name: string;
-  amount: number;
-}
-
 export interface IUserModel extends IModel {
   firstName: string;
   lastName: string;
@@ -28,5 +23,6 @@ export interface IQuery {
   page?: number;
   limit?: number;
   filter?: any;
+  sort?: any;
   populate?: string;
 }

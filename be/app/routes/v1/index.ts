@@ -1,10 +1,16 @@
-import expensesRoute from "./expenses/route";
+import usersRoute from "./users/route";
+import actionsRoute from "./actions/route";
 import { IRoutes, IRoute } from "../../types";
 
 const routes: IRoutes = [
   {
-    url: "expenses",
-    route: expensesRoute,
+    url: "actions",
+    route: actionsRoute,
+  },
+
+  {
+    url: "users",
+    route: usersRoute,
   },
 ];
 

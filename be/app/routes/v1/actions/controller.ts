@@ -1,11 +1,9 @@
-import service from "./service.js";
-import bcrypt from "bcrypt";
-import ENV from "../../../env/index.js";
+import service from "./service";
 import {
   transaction,
   generateAccess,
   getFilterQuery,
-} from "../../../utils/index.js";
+} from "../../../utils/index";
 import { startSession, ClientSession } from "mongoose";
 import { Request, Response } from "express";
 
@@ -13,9 +11,11 @@ const getAll = async (_req: Request, _res: Response) => {
   const { page = 1, limit = 10, populate = "" } = _req.query;
 
   const filter = getFilterQuery(_req.query.filter);
+  const sort = getFilterQuery(_req.query.sort);
 
   const data = await service.getAll({
     filter,
+    sort,
     page: Number(page),
     limit: Number(limit),
     populate: populate.toString(),
@@ -26,7 +26,7 @@ const getAll = async (_req: Request, _res: Response) => {
   _res.send({
     data,
     status: "success",
-    message: "Get expense success",
+    message: "Get action success",
     meta: {
       access: generateAccess({}),
       page,
@@ -42,7 +42,7 @@ const getById = async (_req: Request, _res: Response) => {
   _res.send({
     data,
     status: "success",
-    message: "Get expense success",
+    message: "Get action success",
     meta: {
       access: generateAccess({}),
     },
@@ -55,9 +55,9 @@ const add = async (_req: Request, _res: Response) => {
     await transaction(
       session,
       async () => {
-        return await service.add(_req.body, session);
+        return await service.add({ ..._req.body }, session);
       },
-      "Create expense"
+      "Create action"
     )
   );
 };
@@ -65,14 +65,31 @@ const add = async (_req: Request, _res: Response) => {
 const update = async (_req: Request, _res: Response) => {
   const session: ClientSession = await startSession();
   const { id } = _req.params;
-  const { password, ...res } = _req.body;
   _res.send(
     await transaction(
       session,
       async () => {
-        return await service.update({ _id: id }, res, session);
+        return await service.update({ _id: id }, { ..._req.body }, session);
       },
-      "Update expense"
+      "Update action"
+    )
+  );
+};
+
+const increment = async (_req: Request, _res: Response) => {
+  const session: ClientSession = await startSession();
+  const { id } = _req.params;
+  _res.send(
+    await transaction(
+      session,
+      async () => {
+        return await service.update(
+          { _id: id },
+          { $inc: { score: 1 } },
+          session
+        );
+      },
+      "Update action score"
     )
   );
 };
@@ -87,9 +104,9 @@ const removeOne = async (_req: Request, _res: Response) => {
       async () => {
         return await service.removeOne({ _id: id }, session);
       },
-      "Delete expense"
+      "Delete action"
     )
   );
 };
 
-export { getAll, getById, add, update, removeOne };
+export { getAll, getById, add, update, removeOne, increment };
